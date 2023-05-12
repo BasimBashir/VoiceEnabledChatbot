@@ -12,9 +12,9 @@ To run the project on your pc you should have following for the basic setup:
    python scripts i.e., backend.py and voicebot.py
    
 4. Download the necessary files to the root directory of the app 
-	ClassesSentimentModel.tar.gz    --> 
-	DomainSentimentalModel.tar.gz   -->
-	model.tar.gz                    -->
+	ClassesSentimentModel.tar.gz    --> https://mega.nz/file/skFV3LxI#T4uYyXY_6Cr_-RZVaYVMl51PZSdNhLt72wQYDn5UVcM
+	DomainSentimentalModel.tar.gz   --> https://mega.nz/file/ok0HkbJa#RsblNFVp7Mf_BdfpThoKA5ZOSX3h1QNd3zkmEF1I2vY
+	model.tar.gz                    --> https://mega.nz/file/E1F3GKBI#-zZFdfgFVfQMAHSHsTmZTJgJKx7LC3PhrOGmgymNeFg
 
 5. After performing above steps and you received no error between them now you can unzip
    tar.gz files by using winrar or by cmd command.
