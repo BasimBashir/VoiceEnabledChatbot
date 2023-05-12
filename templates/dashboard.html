@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block body %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('/static/assets/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Admin panel</h1>
+                            <span class="subheading">Manage Your Chatbot here</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                  <hr>
+
+                    <h1>Download Data</h1>
+                    <br>
+                    <div {% if params["dataset"]|length > 11 %}style="max-height: 400px; overflow-y: scroll;"{% endif %}>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            {% for column in params["dataset"][0] %}
+                              <th>{{ column }}</th>
+                            {% endfor %}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for row in params["dataset"][1:] %}
+                            <tr>
+                              {% for value in row %}
+                                <td>{{ value }}</td>
+                              {% endfor %}
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <!-- Download button for the CSV file -->
+                    <a href="{{ url_for('download_csv') }}" class="btn btn-primary">Download CSV</a>
+
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

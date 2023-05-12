@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>AI-Chatbot</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="icon" href="../static/assets/favicon.ico">
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <section class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+
+        <i class="fas fa-bug"></i> Chatbot <i class="fas fa-bug"></i>
+        <a href="/"><i class="fas fa-times" style="right:0;position:relative;display:block;float:right;"></i></a>
+      </div>
+    </header>
+
+    <main class="msger-chat">
+      <div class="msg left-msg">
+        <div class="msg-img" style="background-image: url(../static/assets/img/roboprofile.jpg)"></div>
+
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">Nova</div>
+            <div class="msg-info-time">00:00</div>
+          </div>
+
+          <div class="msg-text">
+            Hi, I am Nova! How can I help you ?😄
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <form class="msger-inputarea">
+      <input type="text" class="msger-input" id="textInput" placeholder="Enter your message...">
+      <button type="submit" class="msger-send-btn">Send</button>
+    </form>
+  </section>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+  <script>
+
+    const msgerForm = get(".msger-inputarea");
+    const msgerInput = get(".msger-input");
+    const msgerChat = get(".msger-chat");
+
+
+    // Icons made by Freepik from www.flaticon.com
+    const BOT_IMG = "../static/assets/img/roboprofile.jpg";
+    const PERSON_IMG = "../static/assets/img/personprofile.png";
+    const BOT_NAME = "Nova";
+    const PERSON_NAME = "You";
+
+    msgerForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const msgText = msgerInput.value;
+      if (!msgText) return;
+
+      appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+      msgerInput.value = "";
+      botResponse(msgText);
+    });
+
+    function appendMessage(name, img, side, text) {
+        const msgBubble = document.createElement("div");
+        msgBubble.classList.add("msg-bubble");
+
+        const msgInfo = document.createElement("div");
+        msgInfo.classList.add("msg-info");
+        msgBubble.appendChild(msgInfo);
+
+        const msgInfoName = document.createElement("div");
+        msgInfoName.classList.add("msg-info-name");
+        msgInfoName.textContent = name;
+        msgInfo.appendChild(msgInfoName);
+
+        const msgInfoTime = document.createElement("div");
+        msgInfoTime.classList.add("msg-info-time");
+        msgInfoTime.textContent = formatDate(new Date());
+        msgInfo.appendChild(msgInfoTime);
+
+        const msgText = document.createElement("div");
+        msgText.classList.add("msg-text");
+        msgBubble.appendChild(msgText);
+
+        const msgHTML = document.createElement("div");
+        msgHTML.classList.add("msg", `${side}-msg`);
+        msgHTML.appendChild(document.createElement("div")).classList.add("msg-img");
+        msgHTML.querySelector(".msg-img").style.backgroundImage = `url(${img})`;
+        msgHTML.appendChild(msgBubble);
+
+        msgerChat.appendChild(msgHTML);
+
+        msgerChat.scrollTop = msgerChat.scrollHeight; // Scroll to the bottom of the chat window
+
+        const scrollIncrement = 50; // Number of pixels to scroll down with each character typed
+
+        const typeMessage = () => {
+            if (msgText.innerHTML.length < text.length) {
+                msgText.innerHTML += text.charAt(msgText.innerHTML.length);
+                msgerChat.scrollTop += scrollIncrement; // Scroll down with each character typed
+                setTimeout(typeMessage, 50);
+            } else {
+                msgerChat.scrollTop = msgerChat.scrollHeight; // Scroll to the bottom of the chat window
+            }
+        };
+
+        setTimeout(() => {
+            typeMessage();
+            msgerChat.scrollTop = msgerChat.scrollHeight; // Scroll to the bottom of the chat window before every latest message
+        }, 500);
+    }
+
+    function botResponse(rawText) {
+
+      // Bot Response
+      $.get("/textchat/get", { msg: rawText }).done(function (data) {
+        console.log(rawText);
+        console.log(data);
+        const msgText = data;
+        appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+
+      });
+
+    }
+
+
+    // Utils
+    function get(selector, root = document) {
+      return root.querySelector(selector);
+    }
+
+    function formatDate(date) {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const amPm = hours >= 12 ? "PM" : "AM";
+    const twelveHourFormat = hours % 12 || 12;
+    const timeString = `${twelveHourFormat}:${padZeroes(minutes)} ${amPm}`;
+    const month = date.toLocaleString("default", { month: "short" });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const dateString = `${month} ${day}, ${year}`;
+    return `${timeString} - ${dateString}`;
+  }
+
+  function padZeroes(num) {
+    return num.toString().padStart(2, "0");
+  }
+
+
+
+
+  </script>
+
+</body>
+
+</html>

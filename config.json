@@ -1,0 +1,14 @@
+{
+    "params":{
+        "local_server":"True",
+        "local_uri":"mysql://root:@127.0.0.1/blogtest",
+        "prod_uri":"mysql://root:@127.0.0.1/blogtest",
+        "blog_name":"Chatbot Developed By Visibility Bots",
+        "admin_user":"basim",
+        "admin_password":"basim",
+        "upload_location":"C:\\Users\\hp\\Desktop\\Invictus Internship Projects\\VoiceBot\\static",
+        "whatsapp_link":"https://wa.me/923017144499",
+        "gmail_link":"mailto:basim.bashir0968@gmail.com?subject=Website Inquiry&body=Hi, I found your VoiceBot App and would like to inquire about...",
+        "github_link":"https://github.com/BasimBashir"
+    }
+}
